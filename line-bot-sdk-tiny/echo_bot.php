@@ -33,7 +33,7 @@ foreach ($client->parseEvents() as $event) {
                         'messages' => array(
                             array(
                                 'type' => 'text',
-                                'text' => '主人, '.$message['text']
+                                'text' => '提督先生 , '.$message['text']
                             )
                         )
                     ));
