@@ -1,11 +1,13 @@
-language: go
+language: php
+php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - '7.1'
+install:
+  - ./devtool/download_req_mirror.sh
+  - composer update
+script: ./vendor/bin/phpunit ./tests
+sudo: false
 
-go:
-    - 1.7
-    - tip
-
-before_install:
-
-script:
-    - go test -bench=. -benchmem ./...
-    #- sh ./install_all_cmd.sh
