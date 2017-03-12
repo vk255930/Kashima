@@ -58,7 +58,15 @@ foreach ($client->parseEvents() as $event) {
                                 # code...
                                 break;
                         }
-
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => $msg
+                                )
+                            )
+                        ));
                     }else{
                         $msg = "提督先生, 您好!\n可以輸入[功能查詢]\n來查查看鹿島會什麼喔!";
                         $client->replyMessage(array(
