@@ -51,7 +51,7 @@ foreach ($client->parseEvents() as $event) {
                         $msg = "";
                         switch ($fun) {
                             case '郵遞區號':
-                                $msg.= "[郵遞區號]的查詢用法為：\n郵遞區號 查詢 {地址}\nex：高雄市橋頭區鐵道北路";
+                                $msg.= "[郵遞區號]的查詢用法為：\n郵遞區號查詢 {地址}\nex：高雄市橋頭區鐵道北路";
                                 break;
                             
                             default:
