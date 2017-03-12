@@ -28,14 +28,14 @@ foreach ($client->parseEvents() as $event) {
             $message = $event['message'];
             switch ($message['type']) {
                 case 'text':
-                    if($message['text'] == "郵遞區號查詢"){
+                    if($message['text'] == "功能"){
+                        $msg = "提督先生, 您好!\n目前鹿島的能幫忙做的事情有\n郵遞區號 查詢";
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => '提督先生,
-請問要查詢哪裡的郵遞區號呢?'
+                                    'text' => $msg
                                 )
                             )
                         ));
