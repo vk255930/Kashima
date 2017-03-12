@@ -28,15 +28,27 @@ foreach ($client->parseEvents() as $event) {
             $message = $event['message'];
             switch ($message['type']) {
                 case 'text':
-                    $client->replyMessage(array(
-                        'replyToken' => $event['replyToken'],
-                        'messages' => array(
-                            array(
-                                'type' => 'text',
-                                'text' => '提督先生 , '.$message['text']
+                    if($message['text'] == "郵遞區號查詢"){
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => '提督先生 , 請問要查詢哪裡的郵遞區號呢?'
+                                )
                             )
-                        )
-                    ));
+                        ));
+                    }else{
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => '提督先生 , '.$message['text']
+                                )
+                            )
+                        ));
+                    }
                     break;
                 default:
                     error_log("Unsupporeted message type: " . $message['type']);
