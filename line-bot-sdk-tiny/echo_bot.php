@@ -47,7 +47,7 @@ foreach ($client->parseEvents() as $event) {
                             )
                         ));
                     }elseif(strpos($key, $keyWord["usage"])){
-                        $fun = explode(" ", $message['type'])['1'];
+                        $fun = explode(" ", $message['type'])['0'];
                         $msg = "";
                         switch ($fun) {
                             case '郵遞區號':
