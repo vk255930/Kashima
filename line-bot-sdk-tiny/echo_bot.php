@@ -34,7 +34,7 @@ foreach ($client->parseEvents() as $event) {
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => '提督先生 , 請問要查詢哪裡的郵遞區號呢?'
+                                    'text' => '提督先生</br>請問要查詢哪裡的郵遞區號呢?'
                                 )
                             )
                         ));
