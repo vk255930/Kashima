@@ -34,7 +34,6 @@ foreach ($client->parseEvents() as $event) {
                         "usage"     => "用法",
                     );
                     $key = " ".$message['text'];
-                    
                     if(strpos($key, $keyWord["function"])){
                         $msg = "提督先生, 您好!\n目前鹿島的能幫忙做的事情有\n[郵遞區號]查詢\n以上的功能喔!\n\n";
                         $usage = "若要查詢用法請輸入\n[功能名稱 用法]\nex：郵遞區號 用法";
@@ -68,8 +67,36 @@ foreach ($client->parseEvents() as $event) {
                                 )
                             )
                         ));
-                    }elseif(strpos($key, $keyWord["zipcode"]){
-                        $msg = "這是郵遞區號查詢!";
+                    }elseif(strpos($key, $keyWord["zipcode"])){
+
+                        $address = explode(" ", $message['text'])['1'];
+
+                        $url = "http://download.post.gov.tw/post/download/Xml_10510.xml";
+                        $ch = curl_init($url);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_URL, $url);    // get the url contents
+
+                        $data = curl_exec($ch); // execute curl request
+                        curl_close($ch);
+
+                        $xml = simplexml_load_string($data);
+                        $json = json_encode($xml);
+                        $xmlArr = json_decode($json,TRUE);
+                        unset($xmlArr['@attributes']);
+                        $zipcode = "";
+                        foreach ($xmlArr as $arrVal) {
+                            foreach ($arrVal as $val) {
+                                $cityAddress = $val['欄位4'].$val['欄位2'];
+                                if($address == $cityAddress){
+                                    if($val['欄位3'] == "全"){
+                                        $zipcode.= $val['欄位1']."\n";
+                                    }else{
+                                        $zipcode.= "\n".$val['欄位3']."：".$val['欄位1'];
+                                    }
+                                }
+                            }
+                        }
+                        $msg = "您查詢的郵遞區號地址為：\n".$address."\n"."該地段的郵遞區號為：".$zipcode;
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
