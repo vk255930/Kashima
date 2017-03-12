@@ -28,7 +28,12 @@ foreach ($client->parseEvents() as $event) {
             $message = $event['message'];
             switch ($message['type']) {
                 case 'text':
-                    if($message['text'] == "功能"){
+                    $keyWord = array(
+                        "zipcode"   => "郵遞",
+                        "function"  => "功能",
+                    );
+                    $key = " ".$message['text'];
+                    if(strpos($key, $keyWord["function"])){
                         $msg = "提督先生, 您好!\n目前鹿島的能幫忙做的事情有\n[郵遞區號]查詢";
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
@@ -40,12 +45,13 @@ foreach ($client->parseEvents() as $event) {
                             )
                         ));
                     }else{
+                        $msg = "提督先生, 您好!\n可以輸入[功能查詢]\n來查查看鹿島會什麼喔!";
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => '提督先生 , '.$message['text']
+                                    'text' => $msg
                                 )
                             )
                         ));
