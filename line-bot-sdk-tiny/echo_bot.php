@@ -68,6 +68,8 @@ foreach ($client->parseEvents() as $event) {
                             )
                         ));
                     }elseif(strpos($key, $keyWord["zipcode"]){
+                        $msg = "這是郵遞區號查詢!";
+/*                        
                         $address = explode(" ", $message['text'])['1'];
 
                         $url = "http://download.post.gov.tw/post/download/Xml_10510.xml";
@@ -96,6 +98,7 @@ foreach ($client->parseEvents() as $event) {
                             }
                         }
                         $msg = "您查詢的郵遞區號地址為：\n".$address."\n"."該地段的郵遞區號為：".$zipcode;
+*/                        
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
