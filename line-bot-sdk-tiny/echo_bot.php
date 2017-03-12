@@ -47,7 +47,7 @@ foreach ($client->parseEvents() as $event) {
                             )
                         ));
                     }elseif(strpos($key, $keyWord["usage"])){
-                        $fun = explode(" ", $message['type'])['0'];
+                        $fun = explode(" ", $message['text'])['0'];
                         $msg = "";
                         switch ($fun) {
                             case '郵遞區號':
@@ -55,7 +55,7 @@ foreach ($client->parseEvents() as $event) {
                                 break;
                             
                             default:
-                                # code...
+                                $msg.= "提督先生抱歉!\n目前鹿島尚未學會此功能!";
                                 break;
                         }
                         $client->replyMessage(array(
