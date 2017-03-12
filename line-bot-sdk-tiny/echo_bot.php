@@ -69,7 +69,6 @@ foreach ($client->parseEvents() as $event) {
                         ));
                     }elseif(strpos($key, $keyWord["zipcode"]){
                         $address = explode(" ", $message['text'])['1'];
-                        ini_set('memory_limit', '256M');
 
                         $url = "http://download.post.gov.tw/post/download/Xml_10510.xml";
                         $ch = curl_init($url);
@@ -91,7 +90,7 @@ foreach ($client->parseEvents() as $event) {
                                     if($val['欄位3'] == "全"){
                                         $zipcode.= $val['欄位1']."\n";
                                     }else{
-                                        $zipcode.= "\n".$val['欄位3']."：".$val['欄位1']."\n";
+                                        $zipcode.= "\n".$val['欄位3']."：".$val['欄位1'];
                                     }
                                 }
                             }
