@@ -31,53 +31,34 @@ foreach ($client->parseEvents() as $event) {
                     $keyWord = array(
                         "zipcode"   => "郵遞",
                         "function"  => "功能",
+                        "usage"     => "用法",
                     );
                     $key = " ".$message['text'];
                     if(strpos($key, $keyWord["function"])){
-                        $msg = "提督先生, 您好!\n目前鹿島的能幫忙做的事情有\n[郵遞區號]查詢\n以上的功能喔!";
+                        $msg = "提督先生, 您好!\n目前鹿島的能幫忙做的事情有\n[郵遞區號]查詢\n以上的功能喔!\n";
+                        $usage = "若要查詢用法請輸入'功能名稱 用法'\nex：郵遞區號 用法";
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
                                 array(
                                     'type' => 'text',
-                                    'text' => $msg
+                                    'text' => $msg.$usage
                                 )
                             )
                         ));
-                    }elseif(strpos($key, $keyWord["zipcode"])){
-                        ini_set('memory_limit', '256M');
-
-                        $url = "http://download.post.gov.tw/post/download/Xml_10510.xml";
-                        $ch = curl_init($url);
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                        curl_setopt($ch, CURLOPT_URL, $url);    // get the url contents
-
-                        $data = curl_exec($ch); // execute curl request
-                        curl_close($ch);
-
-                        $xml = simplexml_load_string($data);
-                        $json = json_encode($xml);
-                        $xmlArr = json_decode($json,TRUE);
-                        unset($xmlArr['@attributes']);
-                        $area = "";
-                        foreach ($xmlArr as $arrVal) {
-                            foreach ($arrVal as $val) {
-                                $cityAddress = $val['欄位4'].$val['欄位2'];
-                                if($str2 == $cityAddress){
-                                    $area.= $val['欄位3']."：".$val['欄位1']."\n";
-                                }
-                            }
+                    }elseif(strpos($key, $keyWord["usage"])){
+                        $fun = explode(" ", $message['type'])['1'];
+                        $msg = "";
+                        switch ($fun) {
+                            case '郵遞區號':
+                                $msg.= "[郵遞區號]的查詢用法為：\n郵遞區號 查詢 {地址}\nex：高雄市橋頭區鐵道北路";
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
                         }
-                        $msg = "您查詢的郵遞區號地址為：\n".$str1."\n"."該地段的郵遞區號為：\n".$area;
-                        $client->replyMessage(array(
-                            'replyToken' => $event['replyToken'],
-                            'messages' => array(
-                                array(
-                                    'type' => 'text',
-                                    'text' => $msg
-                                )
-                            )
-                        ));
+
                     }else{
                         $msg = "提督先生, 您好!\n可以輸入[功能查詢]\n來查查看鹿島會什麼喔!";
                         $client->replyMessage(array(
