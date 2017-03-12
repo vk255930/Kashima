@@ -71,7 +71,7 @@ foreach ($client->parseEvents() as $event) {
 
                         $address = explode(" ", $message['text'])['1'];
                         // $msg = "郵遞區號查詢\n".$address;
-
+/*
                         $url = "http://download.post.gov.tw/post/download/Xml_10510.xml";
                         $ch = curl_init($url);
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -98,7 +98,7 @@ foreach ($client->parseEvents() as $event) {
                             }
                         }
                         $msg = "您查詢的郵遞區號地址為：\n".$address."\n"."該地段的郵遞區號為：".$zipcode;
-                        
+*/                        
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
