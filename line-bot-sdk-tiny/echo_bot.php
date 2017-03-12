@@ -34,7 +34,7 @@ foreach ($client->parseEvents() as $event) {
                     );
                     $key = " ".$message['text'];
                     if(strpos($key, $keyWord["function"])){
-                        $msg = "提督先生, 您好!\n目前鹿島的能幫忙做的事情有\n[郵遞區號]查詢";
+                        $msg = "提督先生, 您好!\n目前鹿島的能幫忙做的事情有\n[郵遞區號]查詢\n以上的功能喔!";
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
