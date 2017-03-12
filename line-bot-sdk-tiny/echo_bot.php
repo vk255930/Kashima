@@ -35,7 +35,7 @@ foreach ($client->parseEvents() as $event) {
                                 array(
                                     'type' => 'text',
                                     'text' => '提督先生,
-                                               請問要查詢哪裡的郵遞區號呢?'
+                                    請問要查詢哪裡的郵遞區號呢?'
                                 )
                             )
                         ));
