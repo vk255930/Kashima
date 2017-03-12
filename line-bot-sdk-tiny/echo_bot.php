@@ -29,7 +29,7 @@ foreach ($client->parseEvents() as $event) {
             switch ($message['type']) {
                 case 'text':
                     $keyWord = array(
-                        "zipcode"   => "郵遞",
+                        "zipcode"   => "郵遞區號查詢",
                         "function"  => "功能",
                         "usage"     => "用法",
                     );
@@ -67,8 +67,43 @@ foreach ($client->parseEvents() as $event) {
                                 )
                             )
                         ));
+                    }elseif(strpos($key, $keyWord["zipcode"]){
+                        $address = explode(" ", $message['text'])['1'];
+                        ini_set('memory_limit', '256M');
+
+                        $url = "http://download.post.gov.tw/post/download/Xml_10510.xml";
+                        $ch = curl_init($url);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_URL, $url);    // get the url contents
+
+                        $data = curl_exec($ch); // execute curl request
+                        curl_close($ch);
+
+                        $xml = simplexml_load_string($data);
+                        $json = json_encode($xml);
+                        $xmlArr = json_decode($json,TRUE);
+                        unset($xmlArr['@attributes']);
+                        $area = "";
+                        foreach ($xmlArr as $arrVal) {
+                            foreach ($arrVal as $val) {
+                                $cityAddress = $val['欄位4'].$val['欄位2'];
+                                if($address == $cityAddress){
+                                    $area.= $val['欄位3']."：".$val['欄位1']."\n";
+                                }
+                            }
+                        }
+                        $msg = "您查詢的郵遞區號地址為：\n".$str1."\n"."該地段的郵遞區號為：\n".$area;
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => $msg
+                                )
+                            )
+                        ));
                     }else{
-                        $msg = "提督先生, 您好!\n可以輸入[功能查詢]\n來查查看鹿島會什麼喔!";
+                        $msg = "提督先生, 您好\n可以輸入[功能查詢]\n來查查看鹿島會什麼喔!";
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
