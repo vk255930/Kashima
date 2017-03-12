@@ -91,7 +91,7 @@ foreach ($client->parseEvents() as $event) {
                                     if($val['欄位3'] == "全"){
                                         $zipcode.= $val['欄位1']."\n";
                                     }else{
-                                        $zipcode.= $val['欄位3']."：".$val['欄位1']."\n";
+                                        $zipcode.= "\n".$val['欄位3']."：".$val['欄位1']."\n";
                                     }
                                 }
                             }
